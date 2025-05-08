@@ -17,11 +17,13 @@ public class EjercicioPropuesto1 {
         //Haciendo un bucle que se repetirá "n" veces
         for(int i=0; i<n; i++){
             //Ingreso de notas
-            System.out.println("Ingrese la nota del estudante " + (i+1) + ":");
+            System.out.println("Ingrese la nota del estudiante " + (i+1) + ":");
             notas[i] = sc.nextInt();
         }
         //Ordenamos el array usando el método "OrdenarArray"
         OrdenarArray(notas);
+        //Imprimimos el array
+        ImprimirArray(notas);
         //Usamos el método "Mediana"
         System.out.println("La mediana es: " + Mediana(notas));
 
@@ -29,7 +31,7 @@ public class EjercicioPropuesto1 {
     public static void OrdenarArray(int[] notas){
         //Metodo Bubble Sort
         for(int i=0; i<notas.length-1; i++){
-            for(int j=0; j<notas.length-1-i; i++){
+            for(int j=0; j<notas.length-1-i; j++){
                 //Si el numero actual es mayor que el siguiente, intercambian posiciones
                 if(notas[j] > notas[j+1]){
                     int tmp = notas[j+1];
@@ -39,8 +41,21 @@ public class EjercicioPropuesto1 {
             }
         }
     }
-    public static int Mediana(int[] notas){
-        //Devolvemos la posición media del array
+    public static void ImprimirArray(int[] notas) {
+        System.out.print("Notas: ");
+        for (int i = 0; i < notas.length; i++) {
+            System.out.print(notas[i]);
+            if (i < notas.length - 1) {
+                System.out.print(", ");
+            }
+        }
+        System.out.println();
+    }
+    public static double Mediana(int[] notas){
+        //Devolvemos la posición media del array si la longitud es par
+        if(notas.length % 2 == 0){
+            return (notas[notas.length/2]+notas[(notas.length/2)-1])/2.0;
+        }
         return notas[notas.length/2];
     }
 }
