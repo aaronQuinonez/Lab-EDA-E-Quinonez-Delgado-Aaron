@@ -26,6 +26,10 @@ public class EjercicioPropuesto1 {
         ImprimirArray(notas);
         //Usamos el método "Mediana"
         System.out.println("La mediana es: " + Mediana(notas));
+        //Usamos el método "Moda"
+        System.out.println("La moda es: "  + Moda(notas));
+        //UsAMOS EL MÉTODO "DesviacionEstandar"
+        System.out.println("La desviación estándar es: "  + DesviacionEstandar(notas));
 
     }
     public static void OrdenarArray(int[] notas){
@@ -57,5 +61,41 @@ public class EjercicioPropuesto1 {
             return (notas[notas.length/2]+notas[(notas.length/2)-1])/2.0;
         }
         return notas[notas.length/2];
+    }
+    public static int Moda(int[] notas){
+        //Suponemos que solo existe una única moda
+        int moda = notas[0];
+        int contadorMax = 0;
+        for(int i=0; i<notas.length; i++){
+            int contador = 0;
+            for(int j=0; j<notas.length; j++){
+                if(notas[j] == notas[i]){
+                    contador++;
+                }
+                //Comparamos el valor de contador con contadorMax para definir la moda
+                if(contador > contadorMax){
+                    contadorMax = contador;
+                    moda = notas[i];
+                }
+            }
+        }
+        return moda;
+    }
+    public static double DesviacionEstandar(int[] notas){
+        double suma = 0;
+        double media = 0;
+        //Usamos for each para hallar la suma total
+        for(int nota : notas) {
+            suma += nota;
+        }
+        //Calculamos la media
+        media = suma / notas.length;
+
+        double sumaCuadrados = 0;
+        for(int nota : notas){
+            sumaCuadrados += Math.pow(nota - media, 2);
+        }
+        //Devolvemos el resultado
+        return Math.sqrt(sumaCuadrados / notas.length);
     }
 }
