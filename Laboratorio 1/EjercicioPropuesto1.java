@@ -28,7 +28,7 @@ public class EjercicioPropuesto1 {
         System.out.println("La mediana es: " + Mediana(notas));
         //Usamos el método "Moda"
         System.out.println("La moda es: "  + Moda(notas));
-        //UsAMOS EL MÉTODO "DesviacionEstandar"
+        //Usamos el método "DesviacionEstandar"
         System.out.println("La desviación estándar es: "  + DesviacionEstandar(notas));
 
     }
