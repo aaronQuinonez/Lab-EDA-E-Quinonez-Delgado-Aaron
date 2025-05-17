@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class EjercicioPropuesto2Lab2 {
     public static int[] rotarIzquierdaArray(int[] A, int d) { 
-        int[] Ainvertido = A.clone();
+        /*int[] Ainvertido = A.clone();
         for(int i=0; i<d; i++){
             //Guardamos el primer valor del array el cual será movido hacia la última posición del array
             int tmp = Ainvertido[0];
@@ -16,7 +16,17 @@ public class EjercicioPropuesto2Lab2 {
             }
             Ainvertido[A.length-1] =tmp;
         }
-        return Ainvertido;
+        return Ainvertido;*/
+        //Caso base
+        if(d < 1){
+            return A;
+        }
+        int[] Ainvertido = new int[A.length];
+        for(int j=1; j<Ainvertido.length; j++){
+                Ainvertido[j-1] = A[j];
+            }
+            Ainvertido[A.length-1] =A[0];
+        return rotarIzquierdaArray(Ainvertido, d-1);
     } 
     public static void main(String[] args){
         Scanner sc = new Scanner(System.in);
