@@ -7,13 +7,15 @@ import java.util.Scanner;
 public class EjercicioPropuesto2Lab2 {
     public static int[] rotarIzquierdaArray(int[] A, int d) { 
         int[] Ainvertido = A.clone();
-        //Guardamos el primer valor del array el cual será movido hacia la última posición del array
-        int tmp = Ainvertido[0];
-        //Rotamos los valores del array un espacio hacia la izquierda
-        for(int i=1; i<Ainvertido.length; i++){
-            Ainvertido[i-1] = Ainvertido[i];
+        for(int i=0; i<d; i++){
+            //Guardamos el primer valor del array el cual será movido hacia la última posición del array
+            int tmp = Ainvertido[0];
+            //Rotamos los valores del array un espacio hacia la izquierda
+            for(int j=1; j<Ainvertido.length; j++){
+                Ainvertido[j-1] = Ainvertido[j];
+            }
+            Ainvertido[A.length-1] =tmp;
         }
-        Ainvertido[A.length-1] =tmp;
         return Ainvertido;
     } 
     public static void main(String[] args){
