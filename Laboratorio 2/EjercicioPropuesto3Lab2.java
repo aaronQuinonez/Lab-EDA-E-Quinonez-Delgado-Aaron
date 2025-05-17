@@ -6,7 +6,14 @@ import java.util.Scanner;
 
 public class EjercicioPropuesto3Lab2 {
     public static void trianguloRecursivo1(int base){
-
+        String triangulo = "";
+        for(int i=0; i<base; i++){
+            for(int j=0; j<i+1; j++){
+                triangulo += "*";
+            }
+            triangulo += "\n";
+        }
+        System.out.println(triangulo);
     }
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
