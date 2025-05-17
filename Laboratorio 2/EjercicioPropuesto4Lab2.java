@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 public class EjercicioPropuesto4Lab2 {
     public static void trianguloRecursivo2(int base, int espacios){
+        /* 
         //Usamos i como el número de asteriscos por fila, j los espacios y k imprime los asteriscos correspondientes a i
         for (int i = 1; i <= base; i++) {
             // Imprimimos espacios a la izquierda
@@ -17,7 +18,23 @@ public class EjercicioPropuesto4Lab2 {
                 System.out.print("*");
             }
             System.out.println();
+        }*/
+        //Caso base
+        if(base == 0)
+            return;
+        trianguloRecursivo2(base-1, espacios+1);
+        //Creamos 2 string uno para la cantidad de espacios y otro que almacena los *
+        String strEsp = "";
+        String str = "";
+        //Guarda en la variable asteriscos
+        for(int i=0; i<base; i++){
+            str += "*";
         }
+        //Guarda en la variable espacios
+        for(int i=0; i<espacios; i++){
+            strEsp += " ";
+        }
+        System.out.println(strEsp + str);
     }
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
