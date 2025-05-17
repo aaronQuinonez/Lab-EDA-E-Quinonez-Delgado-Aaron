@@ -5,9 +5,16 @@
 import java.util.Scanner;
 
 public class EjercicioPropuesto2Lab2 {
-    public int[] rotarIzquierdaArray(int[] A, int d) { 
-        int[] Ainvertido = new int[A.length];
-        return Ainvertido; 
+    public static int[] rotarIzquierdaArray(int[] A, int d) { 
+        int[] Ainvertido = A.clone();
+        //Guardamos el primer valor del array el cual será movido hacia la última posición del array
+        int tmp = Ainvertido[0];
+        //Rotamos los valores del array un espacio hacia la izquierda
+        for(int i=1; i<Ainvertido.length; i++){
+            Ainvertido[i-1] = Ainvertido[i];
+        }
+        Ainvertido[A.length-1] =tmp;
+        return Ainvertido;
     } 
     public static void main(String[] args){
         Scanner sc = new Scanner(System.in);
@@ -22,6 +29,15 @@ public class EjercicioPropuesto2Lab2 {
         //Pedimos la cantidad de veces que rotará hacia la izquierda
         System.out.println("Ingrese la cantidad de veces que rotará hacia la izquierda");
         int d = sc.nextInt();
-        
+        int[] ArrayInv = rotarIzquierdaArray(A, d);
+        //Imprimimos el array original
+        for(int num : A){
+            System.out.print(num + " ");
+        }
+        System.out.println();
+        //Imprimimos el array invertido
+        for(int num : ArrayInv){
+            System.out.print(num + " ");
+        }
     }
 }
