@@ -16,6 +16,19 @@ public class ListLinked <T> implements NodeList<T>{
         this.count++;
     }
     @Override
+    public void insertarUltimo(T x){
+        if(isEmpty())
+            insertarPrimero(x);
+        else{
+            Node<T> aux= this.head;
+            while(aux.getNextNode() != null){
+                aux = aux.getNextNode();
+            }
+            aux.setNextNode(new Node<T>(x));
+            this.count++;
+        }
+    }
+    @Override
     public String toString() {
         String list = "";
         for(Node<T> aux = this.head; aux != null; aux = aux.getNextNode()){

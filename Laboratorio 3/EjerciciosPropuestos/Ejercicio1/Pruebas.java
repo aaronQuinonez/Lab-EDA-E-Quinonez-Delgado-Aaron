@@ -9,6 +9,8 @@ public class Pruebas {
         nums.insertarPrimero(14);
         nums.insertarPrimero(55);
         nums.insertarPrimero(7);
+        nums.insertarUltimo(99);
+        nums.insertarUltimo(77);
         System.out.println(nums);
     }
 }
