@@ -25,5 +25,9 @@ public class Pruebas {
         alumnos.insertarPrimero(new Alumno("José", 20, 20230769));
         alumnos.insertarPrimero(new Alumno("María", 20, 20240512));
         System.out.println(alumnos);
+        //Buscando
+        System.out.println("Buscando alumno Aarón:" + alumnos.buscar(new Alumno("Aarón", 20, 20230466)));
+        System.out.println("Buscando alumno Aarón (diferente cui):" + alumnos.buscar(new Alumno("Aarón", 20, 20230400)));
+        System.out.println("Buscando alumno Pedro:" + alumnos.buscar(new Alumno("Pedro", 23, 20241578)));
     }
 }

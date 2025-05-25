@@ -28,6 +28,14 @@ public class Alumno {
         this.cui = cui;
     }
     @Override
+    public boolean equals(Object obj) {
+        //Si obj no es de tipo Alumno
+        if(obj == null || getClass() != obj.getClass())
+            return false;
+        Alumno alum = (Alumno) obj;
+        return this.nombre.equals(alum.nombre) && this.cui == alum.cui;
+    }
+    @Override
     public String toString() {
     return "Nombre:" + nombre + "\nEdad: " + edad + "\nCUI:" + cui + "\n";
     }
