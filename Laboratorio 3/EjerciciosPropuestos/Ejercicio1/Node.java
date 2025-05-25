@@ -1,7 +1,12 @@
 public class Node <T>{
     private T data;
-    Node<T> nextNode;
+    private Node<T> nextNode;
     
+    public Node(T data, Node<T> nextNode){
+        this.data = data;
+        this.nextNode = nextNode;
+    }
+
     public Node(T data){
         this.data = data;
         this.nextNode = null;
@@ -21,6 +26,10 @@ public class Node <T>{
 
     public void setNextNode(Node<T> nextNode) {
         this.nextNode = nextNode;
+    }
+
+    public String toString() {
+        return this.data.toString();
     }
     
 }
