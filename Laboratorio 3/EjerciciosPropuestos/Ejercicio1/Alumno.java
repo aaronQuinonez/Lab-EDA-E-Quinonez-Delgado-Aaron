@@ -2,6 +2,13 @@ public class Alumno {
     String nombre;
     int edad;
     int cui;
+
+    public Alumno(String nombre, int edad, int cui){
+        this.nombre = nombre;
+        this.edad = edad;
+        this.cui = cui;
+    }
+
     public String getNombre() {
         return nombre;
     }
@@ -22,6 +29,6 @@ public class Alumno {
     }
     @Override
     public String toString() {
-        return "Nombre:" + nombre + "\nEdad: " + edad + "\nCUI:" + cui;
+    return "Nombre:" + nombre + "\nEdad: " + edad + "\nCUI:" + cui + "\n";
     }
 }
