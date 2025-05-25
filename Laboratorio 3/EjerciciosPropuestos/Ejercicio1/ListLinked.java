@@ -29,6 +29,17 @@ public class ListLinked <T> implements NodeList<T>{
         }
     }
     @Override
+    public boolean buscar(T x) {
+        Node<T> aux = head;
+        while (aux != null) {
+            if (aux.getData().equals(x)) {
+                return true;
+            }
+            aux = aux.getNextNode();
+        }
+        return false;
+    }
+    @Override
     public String toString() {
         String list = "";
         for(Node<T> aux = this.head; aux != null; aux = aux.getNextNode()){

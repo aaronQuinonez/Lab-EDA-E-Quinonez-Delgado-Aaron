@@ -12,5 +12,8 @@ public class Pruebas {
         nums.insertarUltimo(99);
         nums.insertarUltimo(77);
         System.out.println(nums);
+        //Buscando
+        System.out.println("Buscando 55: "+ nums.buscar(55));
+        System.out.println("Buscando 1: " + nums.buscar(1));
     }
 }
