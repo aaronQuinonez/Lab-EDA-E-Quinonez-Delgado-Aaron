@@ -1,3 +1,5 @@
+package Problemas_Propuestos.Ejercicio1;
+
 public class NodeDouble<E> {
 
     private E data;
