@@ -30,6 +30,7 @@ public class ListDoubleLinked <E> {
             this.head.setPrev(aux);
             this.head = aux;
         }
+        count++;
     }
 
     public NodeDouble<E> getHead() {
