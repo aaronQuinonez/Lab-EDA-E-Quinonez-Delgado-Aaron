@@ -1,4 +1,3 @@
-package Problemas_Propuestos;
 public interface TDAList<E> {
 	void insertFirst(E x);
 	void insertLast(E x);

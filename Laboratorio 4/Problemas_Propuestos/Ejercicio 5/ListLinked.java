@@ -1,4 +1,4 @@
-package Problemas_Propuestos;
+
 public class ListLinked<E> implements TDAList<E>{
 	private Node<E> head;
 	private int count;
