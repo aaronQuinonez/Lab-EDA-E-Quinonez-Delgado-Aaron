@@ -11,6 +11,27 @@ public class ListDoubleLinked <E> {
         count = 0;
     }
 
+    public boolean isEmpty(){
+        return this.head == null;
+    }
+
+    public int lengt(){
+        return count;
+    }
+
+    public void insertFirst(E x){
+        NodeDouble<E> aux = new NodeDouble<>(x);
+        //Si es el primer nodo será head y tail
+        if(isEmpty()){
+            this.head = aux;
+            this.tail = aux;
+        }else{
+            aux.setNext(head);
+            this.head.setPrev(aux);
+            this.head = aux;
+        }
+    }
+
     public NodeDouble<E> getHead() {
         return head;
     }
@@ -34,5 +55,19 @@ public class ListDoubleLinked <E> {
     public void setCount(int count) {
         this.count = count;
     }
-    
+
+    @Override
+    public String toString() {
+        String result = "[";
+        NodeDouble<E> aux = head;
+        while (aux != null) {
+            result += aux.getData();
+            if (aux.getNext() != null) {
+                result += ", ";
+            }
+            aux = aux.getNext();
+        }
+        result += "]";
+        return result;
+    }
 }
