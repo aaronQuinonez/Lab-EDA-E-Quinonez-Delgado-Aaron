@@ -1,5 +1,6 @@
 package Problemas_Propuestos.Ejercicio3;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 public class Main {
     public static void main(String[] args) {
@@ -23,6 +24,12 @@ public class Main {
         System.out.println("Eliminando primer elemento: " + lista.removeFirst());
         System.out.println("Eliminando último elemento: " + lista.removeLast());
         System.out.println("Nueva lista " + lista);
-        
+        //Utilizando descendingIterator
+        System.out.print("Iteración hacia atrás: ");
+        Iterator<Integer> it = lista.descendingIterator();
+        while (it.hasNext()) {
+            System.out.print(it.next() + " ");
+        }
+        System.out.println();
     }
 }
