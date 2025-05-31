@@ -10,5 +10,16 @@ public class Main {
             lista.insertFirst(i);
         }
         lista.printList();
+        System.out.println("\nEliminando el valor 10 con deleteByKey:");
+        lista.deleteByKey(10);
+        lista.printList();
+
+        System.out.println("\nEliminando el valor 1 con deleteByKey:");
+        lista.deleteByKey(1);
+        lista.printList();
+
+        System.out.println("\nEliminando el valor 7 con deleteByKey:");
+        lista.deleteByKey(7);
+        lista.printList();
     }
 }

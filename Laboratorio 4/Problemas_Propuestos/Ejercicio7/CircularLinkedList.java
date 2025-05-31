@@ -34,6 +34,37 @@ public class CircularLinkedList<E> {
         size++;
     }
 
+    public void deleteByKey(E key) {
+        if (tail == null) 
+            return;
+
+        Node<E> current = tail.getNext();
+        Node<E> prev = tail;
+        boolean found = false;
+        while (true) {
+            if (current.getData().equals(key)) {
+                found = true;
+                break;
+            }
+            if (current == tail) break;
+            prev = current;
+            current = current.getNext();
+        }
+
+        if (!found) 
+            return;
+
+        if (current == tail && current == tail.getNext()) {
+            tail = null;
+        } else if (current == tail) {
+            prev.setNext(current.getNext());
+            tail = prev;
+        } else {
+            prev.setNext(current.getNext());
+        }
+        size--;
+    }
+
     public void printList() {
         if (tail == null) {
             System.out.println("Lista vacía");
