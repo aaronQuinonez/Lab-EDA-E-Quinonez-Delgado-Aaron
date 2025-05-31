@@ -18,6 +18,7 @@ public class Main {
 			System.out.println("6. Buscar un elemento");
 			System.out.println("7. Eliminar el primer elemento (removeFirst)");
 			System.out.println("8. Eliminar el último elemento (removeLast)");
+			System.out.println("9. Longitud de la lista");
             System.out.println("0. Salir");
             System.out.print("Elige una opción: ");
             opcion = scanner.nextInt();
@@ -62,6 +63,9 @@ public class Main {
 				case 8:
 					lista.removeLast();
 					System.out.println("Último elemento eliminado.");
+					break;
+				case 9:
+					System.out.println("Longitud: " + lista.lenght());
 					break;
                 default:
                     System.out.println("Opción no válida.");
