@@ -25,5 +25,7 @@ public class Main {
         System.out.println("\nEliminando elemento en la posición 0 con deleteAtPosition:");
         lista.deleteAtPosition(0);
         lista.printList();
+
+        System.out.println("Tamaño actual de la lista: " + lista.size());
     }
 }

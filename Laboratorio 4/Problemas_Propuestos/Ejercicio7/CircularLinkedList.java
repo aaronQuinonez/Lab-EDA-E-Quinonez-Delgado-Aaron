@@ -12,6 +12,11 @@ public class CircularLinkedList<E> {
     public boolean isEmpty() {
         return tail == null;
     }
+
+    public int size() {
+        return size;
+    }
+    
     public void insertLast(E data) {
         Node<E> newNode = new Node<>(data);
         if (tail == null) {
