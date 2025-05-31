@@ -16,7 +16,7 @@ public class CircularLinkedList<E> {
     public int size() {
         return size;
     }
-    
+
     public void insertLast(E data) {
         Node<E> newNode = new Node<>(data);
         if (tail == null) {
@@ -96,6 +96,35 @@ public class CircularLinkedList<E> {
             if (current == tail) {
                 tail = prev;
             }
+        }
+        size--;
+    }
+
+    public void removeFirst() {
+        if (isEmpty()) 
+            return;
+
+        if (size == 1) {
+            tail = null;
+        } else {
+            tail.setNext(tail.getNext().getNext());
+        }
+        size--;
+    }
+
+    public void removeLast() {
+        if (isEmpty()) 
+            return;
+
+        if (size == 1) {
+            tail = null;
+        } else {
+            Node<E> current = tail.getNext();
+            while (current.getNext() != tail) {
+                current = current.getNext();
+            }
+            current.setNext(tail.getNext());
+            tail = current;
         }
         size--;
     }

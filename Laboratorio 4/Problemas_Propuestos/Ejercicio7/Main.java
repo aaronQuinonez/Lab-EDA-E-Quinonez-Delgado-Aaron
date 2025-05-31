@@ -27,5 +27,13 @@ public class Main {
         lista.printList();
 
         System.out.println("Tamaño actual de la lista: " + lista.size());
+
+        System.out.println("\nEliminando primer elemento (removeFirst):");
+        lista.removeFirst();
+        lista.printList();
+
+        System.out.println("\nEliminando último elemento (removeLast):");
+        lista.removeLast();
+        lista.printList();
     }
 }
