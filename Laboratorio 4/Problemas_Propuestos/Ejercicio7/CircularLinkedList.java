@@ -9,6 +9,9 @@ public class CircularLinkedList<E> {
         this.size = 0;
     }
 
+    public boolean isEmpty() {
+        return tail == null;
+    }
     public void insertLast(E data) {
         Node<E> newNode = new Node<>(data);
         if (tail == null) {
@@ -61,6 +64,33 @@ public class CircularLinkedList<E> {
             tail = prev;
         } else {
             prev.setNext(current.getNext());
+        }
+        size--;
+    }
+
+    public void deleteAtPosition(int pos) {
+        if (isEmpty() || pos < 0 || pos >= size) {
+            System.out.println("Posición inválida o lista vacía.");
+            return;
+        }
+        Node<E> current = tail.getNext();
+        Node<E> prev = tail;
+        if (pos == 0) {
+            if (size == 1) {
+                tail = null;
+            } else {
+                prev.setNext(current.getNext());
+                tail = prev;
+            }
+        } else {
+            for (int i = 0; i < pos; i++) {
+                prev = current;
+                current = current.getNext();
+            }
+            prev.setNext(current.getNext());
+            if (current == tail) {
+                tail = prev;
+            }
         }
         size--;
     }

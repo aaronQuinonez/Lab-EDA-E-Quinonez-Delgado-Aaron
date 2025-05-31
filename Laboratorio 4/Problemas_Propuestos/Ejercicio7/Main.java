@@ -21,5 +21,9 @@ public class Main {
         System.out.println("\nEliminando el valor 7 con deleteByKey:");
         lista.deleteByKey(7);
         lista.printList();
+
+        System.out.println("\nEliminando elemento en la posición 0 con deleteAtPosition:");
+        lista.deleteAtPosition(0);
+        lista.printList();
     }
 }
