@@ -42,27 +42,54 @@ public class ListLinked<E> implements TDAList<E>{
 		return aux != null;
 	}
 	
-	public void remove(E x) {
-		if(isEmpty()){
+	public void deleteByKey(E x) {
+		if (isEmpty())
+			return;
+
+		if (head.getData().equals(x)) {
+			head = head.getNext();
+			count--;
 			return;
 		}
-		Node<E> dato = this.head;
-		Node<E> apuntador = this.head.getNext();
-		while(apuntador != null && !apuntador.getData().equals(x)){
-			dato = dato.getNext();
-			apuntador = apuntador.getNext();
+
+		Node<E> prev = head;
+		Node<E> curr = head.getNext();
+		while (curr != null && !curr.getData().equals(x)) {
+			prev = curr;
+			curr = curr.getNext();
 		}
-		if(apuntador.getData().equals(x)){
-			dato.setNext(apuntador.getNext());
+		if (curr != null) {
+			prev.setNext(curr.getNext());
+			count--;
+		}
+	}
+
+	public void deleteAtPosition(int x) {
+		if (x < 0 || x >= count || isEmpty()) 
+			return;
+
+		if (x == 0) {
+			head = head.getNext();
+			count--;
+			return;
+		}
+		Node<E> prev = head;
+		for (int i = 0; i < x - 1; i++) {
+			prev = prev.getNext();
+		}
+		Node<E> toDelete = prev.getNext();
+		if (toDelete != null) {
+			prev.setNext(toDelete.getNext());
+			count--;
 		}
 	}
 
 	public void removeFirst() {
-        if (!isEmpty()) {
-            head = head.getNext();
-            count--;
-        }
-    }
+		if (!isEmpty()) {
+			head = head.getNext();
+			count--;
+		}
+	}
 
     public void removeLast() {
         if (isEmpty()) return;
@@ -84,5 +111,4 @@ public class ListLinked<E> implements TDAList<E>{
 			str += aux.toString() + ", ";
 		return str;
 	}
-	
 }

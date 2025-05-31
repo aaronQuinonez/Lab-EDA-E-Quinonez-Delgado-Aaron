@@ -4,7 +4,8 @@ public interface TDAList<E> {
 	void insertFirst(E x);
 	void insertLast(E x);
 	boolean search(E x);
-	void remove(E x);
+	void deleteByKey(E x);
+	void deleteAtPosition(int x);
 	int lenght();
 	boolean isEmpty();
 }
