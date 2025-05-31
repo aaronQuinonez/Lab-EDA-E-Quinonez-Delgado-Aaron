@@ -1,4 +1,5 @@
-
+package Problemas_Propuestos.Ejercicio5;
+ 
 public class ListLinked<E> implements TDAList<E>{
 	private Node<E> head;
 	private int count;
@@ -55,6 +56,27 @@ public class ListLinked<E> implements TDAList<E>{
 			dato.setNext(apuntador.getNext());
 		}
 	}
+
+	public void removeFirst() {
+        if (!isEmpty()) {
+            head = head.getNext();
+            count--;
+        }
+    }
+
+    public void removeLast() {
+        if (isEmpty()) return;
+        if (head.getNext() == null) {
+            head = null;
+        } else {
+            Node<E> aux = head;
+            while (aux.getNext().getNext() != null) {
+                aux = aux.getNext();
+            }
+            aux.setNext(null);
+        }
+        count--;
+    }
 	
 	public String toString() {
 		String str = "";

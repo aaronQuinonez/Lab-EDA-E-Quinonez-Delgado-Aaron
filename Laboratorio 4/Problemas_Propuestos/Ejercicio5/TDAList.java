@@ -1,3 +1,5 @@
+package Problemas_Propuestos.Ejercicio5;
+
 public interface TDAList<E> {
 	void insertFirst(E x);
 	void insertLast(E x);
