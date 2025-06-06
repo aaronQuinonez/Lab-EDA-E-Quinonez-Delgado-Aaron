@@ -6,5 +6,4 @@ public interface StackIn <E>{
     E top();
     void destroyStack();
     boolean isEmpty();
-    boolean isFull();
 }
