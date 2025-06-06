@@ -5,7 +5,6 @@ public interface QueueIn<E> {
     E dequeue();
     void destroyQueue();
     boolean isEmpty();
-    boolean isFull();
     E front();
     E back();
 }
