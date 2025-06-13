@@ -3,7 +3,7 @@ package Ejercicios_Resueltos;
 public interface BSTInterface<E extends Comparable<E>> {
     void destroy();
     boolean isEmpty();
-    void insert(E x);
+    void insert(E x) throws ExceptionItemDuplicate;
     void remove(E x);
     boolean search(E x);
     E min();
