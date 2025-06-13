@@ -5,7 +5,7 @@ public interface BSTInterface<E extends Comparable<E>> {
     boolean isEmpty();
     void insert(E x) throws ExceptionItemDuplicate;
     void remove(E x);
-    boolean search(E x);
+    boolean search(E x) throws ExceptionItemNotFound;
     E min();
     E max();
     E predecesor(E x);
