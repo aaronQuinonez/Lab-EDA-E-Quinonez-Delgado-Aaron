@@ -56,8 +56,25 @@ public class BST<E extends Comparable<E>> implements BSTInterface<E>{
     public void remove(E x) {}
 
     @Override
-    public boolean search(E x) {
-        return false;
+    public boolean search(E x) throws ExceptionItemNotFound{
+        if(isEmpty()){
+            throw new ExceptionItemNotFound("Lista vacía");
+        }else{
+            Node<E> cur = root;
+            while(cur != null){
+                int com = x.compareTo(cur.getData());
+                if(com == 0){
+                    return true;
+                }
+                if(com < 0){
+                    cur = cur.getLeft();
+                }
+                else{
+                    cur = cur.getRight();
+                }
+            }
+            return false;
+        }
     }
 
     @Override
