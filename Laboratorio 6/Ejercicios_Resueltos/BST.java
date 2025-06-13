@@ -108,14 +108,78 @@ public class BST<E extends Comparable<E>> implements BSTInterface<E>{
     }
 
     @Override
-    public E predecesor(E x) {
-        return null;
+    public E predecesor(E x) throws ExceptionItemNotFound{
+        if(isEmpty()) {
+            throw new ExceptionItemNotFound("Arbol vacío");
+        }else{
+            Node<E> cur = root;
+            Node<E> pre = null;
+            while(cur != null){
+                int com = x.compareTo(cur.getData());
+                if(com == 0){
+                    //Caso 1 si tiene subárbol izquierdo
+                    if(cur.getLeft() != null){
+                        Node<E> tmp = cur.getLeft();
+                        while(tmp.getRight() != null){
+                            tmp = tmp.getRight();
+                        }
+                        return tmp.getData();
+                    }
+                    //Caso 2 no tiene subárbol izquierdo
+                    if (pre != null) {
+                        return pre.getData();
+                    } else {
+                        throw new ExceptionItemNotFound("No hay predecesor");
+                    }
+                }
+                if(com < 0){
+                    cur = cur.getLeft();
+                }
+                else{
+                    //Guardamos posible predecesor
+                    pre = cur;
+                    cur = cur.getRight();
+                }
+            }
+            throw new ExceptionItemNotFound("Elemento no encontrado");
+        }
     }
 
     @Override
-    public E sucesor(E x) {
-        return null;
+    public E sucesor(E x) throws ExceptionItemNotFound{
+        if(isEmpty()){
+            throw new ExceptionItemNotFound("Arbol vacío");
+        }else{
+            Node<E> cur = root;
+            Node<E> suc = null;
+            while(cur != null){
+                int com = x.compareTo(cur.getData());
+                if(com == 0){
+                    //Caso 1 si tiene subárbol derecho
+                    if(cur.getRight() != null){
+                        Node<E> tmp = cur.getRight();
+                        while(tmp.getLeft() != null){
+                            tmp = tmp.getLeft();
+                        }
+                        return tmp.getData();
+                    }
+                    //Caso 2 no tiene subárbol derecho
+                    if (suc != null) {
+                        return suc.getData();
+                    } else {
+                        throw new ExceptionItemNotFound("No hay sucesor");
+                    }
+                }
+                if(com < 0){
+                    //Guardamos posible sucesor
+                    suc = cur;
+                    cur = cur.getLeft();
+                }
+                else{
+                    cur = cur.getRight();
+                }
+            }
+            throw new ExceptionItemNotFound("Elemento no encontrado");
+        }
     }
-
-    
 }
