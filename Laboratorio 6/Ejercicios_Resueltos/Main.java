@@ -11,6 +11,7 @@ public class Main {
             System.out.println("Buscar 10: " + arbol.search(10));
             System.out.println("Buscar 25: " + arbol.search(25));
             System.out.println("El valor mínimo del árbol es: " + arbol.min());
+            System.out.println("El valor máximo del árbol es: " + arbol.max());
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
