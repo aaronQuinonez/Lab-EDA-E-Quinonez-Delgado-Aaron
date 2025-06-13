@@ -78,8 +78,18 @@ public class BST<E extends Comparable<E>> implements BSTInterface<E>{
     }
 
     @Override
-    public E min() {
-        return null;
+    public E min() throws ExceptionItemNotFound{
+        if(isEmpty()){
+            throw new ExceptionItemNotFound("Lista vacía");
+        }else{
+            Node<E> cur = root;
+            Node<E> par = null;
+            while(cur != null){
+                par = cur;
+                cur = cur.getLeft();
+            }
+            return par.getData();
+        }
     }
 
     @Override
