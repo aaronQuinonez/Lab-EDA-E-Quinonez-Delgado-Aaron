@@ -8,6 +8,6 @@ public interface BSTInterface<E extends Comparable<E>> {
     boolean search(E x) throws ExceptionItemNotFound;
     E min() throws ExceptionItemNotFound;
     E max() throws ExceptionItemNotFound;
-    E predecesor(E x);
-    E sucesor(E x);
+    E predecesor(E x) throws ExceptionItemNotFound;
+    E sucesor(E x) throws ExceptionItemNotFound;
 }
