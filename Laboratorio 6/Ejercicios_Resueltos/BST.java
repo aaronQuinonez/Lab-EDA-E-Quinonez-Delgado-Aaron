@@ -13,7 +13,9 @@ public class BST<E extends Comparable<E>> implements BSTInterface<E>{
     }
 
     @Override
-    public void destroy(){}
+    public void destroy(){
+        root = null;
+    }
 
     @Override
     public void insert(E x) throws ExceptionItemDuplicate{
