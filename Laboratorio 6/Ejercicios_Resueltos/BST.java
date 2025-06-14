@@ -228,10 +228,32 @@ public class BST<E extends Comparable<E>> implements BSTInterface<E>{
         }
     }
 
+    private void preorden(Node<E> node, StringBuilder str){
+        if(node != null){
+            str.append(node.getData()).append(" ");
+            preorden(node.getLeft(), str);
+            preorden(node.getRight(), str);
+        }
+    }
+
+    private void postorden(Node<E> node, StringBuilder str){
+        if(node != null){
+            postorden(node.getLeft(), str);
+            postorden(node.getRight(), str);
+            str.append(node.getData()).append(" ");
+        }
+    }
+
     @Override
     public String toString() {
-        StringBuilder str = new StringBuilder();
-        inorden(root, str);
-        return "Recorrido inorden: " + str.toString();
+        StringBuilder strIn = new StringBuilder();
+        StringBuilder strPre = new StringBuilder();
+        StringBuilder strPos = new StringBuilder();
+        inorden(root, strIn);
+        preorden(root, strPre);
+        postorden(root, strPos);
+        return "Recorrido inorden: " + strIn.toString()
+        + "\n Recorrido preorden: " + strPre.toString()
+        + "\n Recorrido postorden: " + strPos.toString();
     }
 }
