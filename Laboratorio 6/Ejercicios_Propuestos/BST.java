@@ -95,7 +95,7 @@ public class BST<E extends Comparable<E>> implements BSTInterface<E>{
     @Override
     public boolean search(E x) throws ExceptionItemNotFound{
         if(isEmpty()){
-            throw new ExceptionItemNotFound("Lista vacía");
+            return false;
         }else{
             Node<E> cur = root;
             while(cur != null){
