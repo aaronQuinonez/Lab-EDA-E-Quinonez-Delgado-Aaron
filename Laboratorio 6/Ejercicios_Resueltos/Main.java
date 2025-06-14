@@ -22,7 +22,8 @@ public class Main {
             //Predecesor
             System.out.println("Predecesor de 10: " + arbol.predecesor(10));
             System.out.println("Predecesor de 15: " + arbol.predecesor(15)); 
-
+            //Imprimiendo árbol
+            System.out.println("Árbol completo: " + arbol);
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }

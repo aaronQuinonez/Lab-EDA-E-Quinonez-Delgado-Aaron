@@ -182,4 +182,19 @@ public class BST<E extends Comparable<E>> implements BSTInterface<E>{
             throw new ExceptionItemNotFound("Elemento no encontrado");
         }
     }
+
+    private void inorden(Node<E> node, StringBuilder str){
+        if(node != null){
+            inorden(node.getLeft(), str);
+            str.append(node.getData()).append(" ");
+            inorden(node.getRight(), str);
+        }
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder str = new StringBuilder();
+        inorden(root, str);
+        return "Recorrido inorden: " + str.toString();
+    }
 }
