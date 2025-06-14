@@ -53,7 +53,42 @@ public class BST<E extends Comparable<E>> implements BSTInterface<E>{
     }
 
     @Override
-    public void remove(E x) {}
+    public void remove(E x) throws ExceptionItemNotFound{
+        root = remove(x, root);
+    }
+
+    private Node<E> remove (E x, Node<E> node) throws ExceptionItemNotFound{
+        if(node == null){
+            throw new ExceptionItemNotFound("Elemento no encontrado");
+        }else{
+            int com = x.compareTo(node.getData());
+            if(com < 0 ){
+                node.setLeft(remove(x, node.getLeft()));
+            }
+            else if(com > 0){
+                node.setRight(remove(x, node.getRight()));
+            }else{
+                //Caso 1 si el nodo no tiene hijos
+                if(node.getLeft() == null && node.getRight() == null){
+                    return null;
+                }
+                //Caso 2 solo tiene un hijo
+                if(node.getLeft() == null){
+                    return node.getRight();
+                }else if(node.getRight() == null){
+                    return node.getLeft();
+                }
+                //Caso 3 tiene 2 hijos, lo reemplazamos por su sucesor
+                Node<E> suc = node.getRight();
+                while (suc.getLeft() != null) {
+                    suc = suc.getLeft();
+                }
+                node.setData(suc.getData());
+                node.setRight(remove(suc.getData(), node.getRight()));
+            }
+            return node;
+        }
+    }
 
     @Override
     public boolean search(E x) throws ExceptionItemNotFound{

@@ -24,6 +24,13 @@ public class Main {
             System.out.println("Predecesor de 15: " + arbol.predecesor(15)); 
             //Imprimiendo árbol
             System.out.println("Árbol completo: " + arbol);
+            // Eliminaciones
+            arbol.remove(7);
+            System.out.println("Después de eliminar 7 (hoja): " + arbol);
+            arbol.remove(20);
+            System.out.println("Después de eliminar 20 (dos hijos): " + arbol);
+            arbol.remove(10);
+            System.out.println("Después de eliminar 10 (un hijo): " + arbol);
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
