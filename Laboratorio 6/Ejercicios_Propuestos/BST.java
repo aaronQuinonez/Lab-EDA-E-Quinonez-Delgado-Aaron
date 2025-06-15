@@ -1,4 +1,7 @@
 package Ejercicios_Propuestos;
+import org.graphstream.graph.Graph;
+import org.graphstream.graph.implementations.SingleGraph;
+import org.graphstream.ui.view.Viewer;
 
 public class BST<E extends Comparable<E>> implements BSTInterface<E>{
     private Node<E> root;
@@ -241,6 +244,107 @@ public class BST<E extends Comparable<E>> implements BSTInterface<E>{
             postorden(node.getLeft(), str);
             postorden(node.getRight(), str);
             str.append(node.getData()).append(" ");
+        }
+    }
+       
+    // Número de nodos en el árbol
+    public int size() {
+        return size(root);
+    }
+    
+    // Número de nodos en el subárbol
+    private int size(Node<E> node) {
+        if (node == null) 
+            return 0;
+        return 1 + size(node.getLeft()) + size(node.getRight());
+    }
+    
+    // Número de claves en el árbol menores que la clave proporcionada
+    public int rank(E key) {
+        return rank(key, root);
+    }
+    
+    // Número de claves en el subárbol menores que la clave proporcionada
+    private int rank(E key, Node<E> node) {
+        if (node == null) {
+            return 0;
+        }
+        int cmp = key.compareTo(node.getData());
+        if (cmp < 0) {
+            return rank(key, node.getLeft());
+        }
+        else if (cmp > 0) {
+            return 1 + size(node.getLeft()) + rank(key, node.getRight());
+        }
+        else {
+            return size(node.getLeft());
+        }
+    }
+    
+    public int depth(E key) {
+        return depth(key, root, 1);
+    }
+    
+    private int depth(E key, Node<E> node, int level) {
+        if (node == null) 
+            return 0;
+        if (node.getData().compareTo(key) == 0) 
+            return level;
+        int leftLevel = depth(key, node.getLeft(), level+1);
+        if (leftLevel > 0) {
+            return leftLevel;
+        }
+        else {
+            return depth(key, node.getRight(), level+1);
+        }
+    }
+
+    public void printTreeGraph() {
+        String styleSheet =
+            "node {" +
+            "	text-alignment: right;" +
+            "	text-offset: 10px, 0px;" +
+            "   size: 15px, 15px;" +
+            "}" +
+            "node.marked {" +
+            "	fill-color: red;" +
+            "}";
+    
+        System.setProperty("org.graphstream.ui", "swing");
+        Graph graph = new SingleGraph("Binary Search Tree");
+        graph.setAttribute("ui.stylesheet", styleSheet);
+
+        print(root, graph);
+
+        Viewer viewer = graph.display();
+        viewer.disableAutoLayout();
+    }
+    
+    private void print(Node<E> x, Graph graph) {
+        if (x == null) return;
+
+        org.graphstream.graph.Node n = graph.addNode(x.getData().toString());
+
+        if (size() <= 50) {
+            n.setAttribute("ui.label", n.getId());
+        }
+
+        n.setAttribute("x", rank(x.getData()));
+        n.setAttribute("y", depth(x.getData())*-1);
+
+        print(x.getLeft(), graph);
+        print(x.getRight(), graph);
+
+        if (x.getLeft() != null) {
+            String keyStr = x.getData().toString();
+            String leftKey = x.getLeft().getData().toString();
+            graph.addEdge(keyStr + leftKey, keyStr, leftKey);
+        }
+
+        if (x.getRight() != null) {
+            String keyStr = x.getData().toString();
+            String rightKey = x.getRight().getData().toString();
+            graph.addEdge(keyStr + rightKey, keyStr, rightKey);
         }
     }
 
