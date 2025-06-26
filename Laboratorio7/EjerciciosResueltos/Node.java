@@ -10,7 +10,7 @@ public class Node<E> {
         this.data = data;
         this.left = null;
         this.right = null;
-        this.height = 1;
+        this.height = 0;
     }
 
     public E getData() {
