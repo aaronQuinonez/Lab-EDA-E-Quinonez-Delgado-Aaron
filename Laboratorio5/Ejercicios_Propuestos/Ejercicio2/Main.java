@@ -1,8 +1,8 @@
-package Ejercicios_Propuestos.Ejercicio2;
+package Laboratorio5.Ejercicios_Propuestos.Ejercicio2;
 
 import java.util.Scanner;
 
-import Ejercicios_Propuestos.QueueGen;
+import Laboratorio5.Ejercicios_Propuestos.QueueGen;
 
 public class Main {
     public static void main(String[] args) {
