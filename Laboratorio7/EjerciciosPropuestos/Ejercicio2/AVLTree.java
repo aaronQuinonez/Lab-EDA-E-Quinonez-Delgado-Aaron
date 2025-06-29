@@ -29,4 +29,14 @@ public class AVLTree<E extends Comparable<E>> {
         else node.setLeft(insertAVL(node.getLeft(), x));
         return node;
     }
+    
+    private NodeAVL<E> rotacionSimpleIzquierda(NodeAVL<E> x){
+        NodeAVL<E> y = x.getRight();
+        x.setRight(y.getLeft());
+        y.setLeft(x);
+        //Factores de equilibrio
+        x.setFe(x.getFe() - 1 - Math.max(y.getFe(), 0));
+        y.setFe(y.getFe() - 1 + Math.min(x.getFe(), 0));
+        return y;
+    }
 }
