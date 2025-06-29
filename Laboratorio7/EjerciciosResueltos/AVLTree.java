@@ -90,4 +90,20 @@ public class AVLTree<E extends Comparable<E>> extends BST<E> {
 
         return x;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder str = new StringBuilder();
+        str.append("Árbol AVL:\n");
+        inorden((NodeAVL<E>) root, str);
+        return str.toString();
+    }
+
+    private void inorden(NodeAVL<E> node, StringBuilder str) {
+        if (node != null) {
+            inorden((NodeAVL<E>) node.getLeft(), str);
+            str.append(node.getData().toString() + " ");
+            inorden((NodeAVL<E>) node.getRight(), str);
+        }
+    }
 }
