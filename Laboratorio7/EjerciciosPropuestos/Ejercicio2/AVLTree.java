@@ -110,6 +110,20 @@ public class AVLTree<E extends Comparable<E>> {
         return false;
     }
 
+    public E min() throws ExceptionItemNotFound {
+        if (isEmpty()) throw new ExceptionItemNotFound("El árbol está vacío.");
+        NodeAVL<E> current = root;
+        while (current.getLeft() != null) current = current.getLeft();
+        return current.getData();
+    }
+
+    public E max() throws ExceptionItemNotFound {
+        if (isEmpty()) throw new ExceptionItemNotFound("El árbol está vacío.");
+        NodeAVL<E> current = root;
+        while (current.getRight() != null) current = current.getRight();
+        return current.getData();
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
