@@ -171,6 +171,92 @@ public class AVLTree<E extends Comparable<E>> {
         return suc.getData();
     }
 
+    public void remove(E x) throws ExceptionItemNotFound {
+        height = false;
+        root = removeAVL(root, x);
+    }
+
+    private NodeAVL<E> removeAVL(NodeAVL<E> node, E x) throws ExceptionItemNotFound {
+        if (node == null) {
+            throw new ExceptionItemNotFound("Elemento no encontrado: " + x);
+        }
+
+        int cmp = x.compareTo(node.getData());
+
+        if (cmp < 0) {
+            node.setLeft(removeAVL(node.getLeft(), x));
+            if (height) {
+                node = rebalanceRight(node);
+            }
+        } else if (cmp > 0) {
+            node.setRight(removeAVL(node.getRight(), x));
+            if (height) {
+                node = rebalanceLeft(node);
+            }
+        } else {
+            // Nodo encontrado
+            if (node.getLeft() == null || node.getRight() == null) {
+                node = (node.getLeft() != null) ? node.getLeft() : node.getRight();
+                height = true;
+            } else {
+                // Buscar sucesor
+                NodeAVL<E> suc = getMin(node.getRight());
+                node.setData(suc.getData());
+                node.setRight(removeAVL(node.getRight(), suc.getData()));
+                if (height) node = rebalanceLeft(node);
+            }
+        }
+        return node;
+    }
+
+    private NodeAVL<E> getMin(NodeAVL<E> node) {
+        while (node.getLeft() != null) {
+            node = node.getLeft();
+        }
+        return node;
+    }
+
+    private NodeAVL<E> rebalanceLeft(NodeAVL<E> node) {
+        int fe = node.getFe();
+        if (fe == 1) node.setFe(0);
+        else if (fe == 0) {
+            node.setFe(-1);
+            height = false;
+        } else if (fe == -1) {
+            NodeAVL<E> left = node.getLeft();
+            if (left.getFe() <= 0) {
+                node = rotacionSimpleDerecha(node);
+                if (left.getFe() == 0) {
+                    node.setFe(1);
+                    node.getRight().setFe(-1);
+                    height = false;
+                }
+            } else node = balancearIzquierda(node);
+        }
+        return node;
+    }
+
+    private NodeAVL<E> rebalanceRight(NodeAVL<E> node) {
+        int fe = node.getFe();
+        if (fe == -1) node.setFe(0);
+        else if (fe == 0) {
+            node.setFe(1);
+            height = false;
+        } else if (fe == 1) {
+            NodeAVL<E> right = node.getRight();
+            if (right.getFe() >= 0) {
+                node = rotacionSimpleIzquierda(node);
+                if (right.getFe() == 0) {
+                    node.setFe(-1);
+                    node.getLeft().setFe(1);
+                    height = false;
+                }
+            } else node = balancearDerecha(node);
+        }
+
+        return node;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
