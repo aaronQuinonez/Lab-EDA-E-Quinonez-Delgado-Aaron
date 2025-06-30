@@ -27,6 +27,8 @@ public class Main {
         try {
             System.out.println("\nMínimo del árbol: " + avl.min());
             System.out.println("Máximo del árbol: " + avl.max());
+            System.out.println("Predecesor de 25: " + avl.predecesor(25));
+            System.out.println("Sucesor de 25: " + avl.sucesor(25));
         } catch (ExceptionItemNotFound e) {
             System.out.println("Error: " + e.getMessage());
         }
