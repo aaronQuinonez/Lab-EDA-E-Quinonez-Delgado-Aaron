@@ -88,12 +88,14 @@ public class AVLTree<E extends Comparable<E>> {
 
     private NodeAVL<E> balancearIzquierda(NodeAVL<E> node){
         NodeAVL<E> left = node.getLeft();
+        if (left == null) return node;
         if(left.getFe() > 0) node.setLeft(rotacionSimpleIzquierda(left));
         return rotacionSimpleDerecha(node);
     }
 
     private NodeAVL<E> balancearDerecha(NodeAVL<E> node){
         NodeAVL<E> right = node.getRight();
+        if (right == null) return node;
         if(right.getFe() > 0) node.setRight(rotacionSimpleDerecha(right));
         return rotacionSimpleIzquierda(node);
     }
