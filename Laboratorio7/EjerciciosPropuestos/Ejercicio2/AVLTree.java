@@ -97,4 +97,19 @@ public class AVLTree<E extends Comparable<E>> {
         if(right.getFe() > 0) node.setRight(rotacionSimpleDerecha(right));
         return rotacionSimpleIzquierda(node);
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        inOrder(root, sb);
+        return sb.toString().trim();
+    }
+
+    private void inOrder(NodeAVL<E> node, StringBuilder sb) {
+        if (node != null) {
+            inOrder(node.getLeft(), sb);
+            sb.append(node.getData()).append(" ");
+            inOrder(node.getRight(), sb);
+        }
+    }
 }
