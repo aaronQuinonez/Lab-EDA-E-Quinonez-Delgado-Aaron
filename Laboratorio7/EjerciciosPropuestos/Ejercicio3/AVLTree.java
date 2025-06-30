@@ -30,6 +30,7 @@ public class AVLTree<E extends Comparable<E>> {
             height = true;
             return new NodeAVL<>(x);
         }
+        
         int cmp = x.compareTo(node.getData());
         if(cmp == 0) {
             height = false;
@@ -74,9 +75,16 @@ public class AVLTree<E extends Comparable<E>> {
         NodeAVL<E> y = x.getRight();
         x.setRight(y.getLeft());
         y.setLeft(x);
-        //Factores de equilibrio
-        x.setFe(x.getFe() - 1 - Math.max(y.getFe(), 0));
-        y.setFe(y.getFe() - 1 + Math.min(x.getFe(), 0));
+        
+        // Actualizar factores de equilibrio
+        if (y.getFe() <= 0) {
+            x.setFe(x.getFe() - 1 - y.getFe());
+            y.setFe(y.getFe() - 1 + x.getFe());
+        } else {
+            x.setFe(x.getFe() - 1);
+            y.setFe(y.getFe() - 1);
+        }
+        
         return y;
     }
 
@@ -84,24 +92,47 @@ public class AVLTree<E extends Comparable<E>> {
         NodeAVL<E> x = y.getLeft();
         y.setLeft(x.getRight());
         x.setRight(y);
-        //Factores de equilibrio
-        y.setFe(y.getFe() + 1 - Math.min(x.getFe(), 0));
-        x.setFe(x.getFe() + 1 + Math.max(y.getFe(), 0));
+        
+        // Actualizar factores de equilibrio
+        if (x.getFe() >= 0) {
+            y.setFe(y.getFe() + 1 - x.getFe());
+            x.setFe(x.getFe() + 1 + y.getFe());
+        } else {
+            y.setFe(y.getFe() + 1);
+            x.setFe(x.getFe() + 1);
+        }
+        
         return x;
     }
 
     private NodeAVL<E> balancearIzquierda(NodeAVL<E> node){
         NodeAVL<E> left = node.getLeft();
         if (left == null) return node;
-        if(left.getFe() > 0) node.setLeft(rotacionSimpleIzquierda(left));
-        return rotacionSimpleDerecha(node);
+        
+        // Verificar el factor de equilibrio del hijo izquierdo
+        if(left.getFe() < 0) { 
+            // Rotación simple derecha (caso LL)
+            return rotacionSimpleDerecha(node);
+        } else {
+            // Rotación doble: izquierda-derecha (caso LR)
+            node.setLeft(rotacionSimpleIzquierda(left));
+            return rotacionSimpleDerecha(node);
+        }
     }
 
     private NodeAVL<E> balancearDerecha(NodeAVL<E> node){
         NodeAVL<E> right = node.getRight();
         if (right == null) return node;
-        if(right.getFe() > 0) node.setRight(rotacionSimpleDerecha(right));
-        return rotacionSimpleIzquierda(node);
+        
+        // Verificar el factor de equilibrio del hijo derecho
+        if(right.getFe() > 0) {
+            // Rotación simple izquierda (caso RR)
+            return rotacionSimpleIzquierda(node);
+        } else {
+            // Rotación doble: derecha-izquierda (caso RL)
+            node.setRight(rotacionSimpleDerecha(right));
+            return rotacionSimpleIzquierda(node);
+        }
     }
 
     public boolean search(E data) {
@@ -136,7 +167,6 @@ public class AVLTree<E extends Comparable<E>> {
         while (current != null) {
             int cmp = x.compareTo(current.getData());
             if (cmp == 0) {
-                // Si tiene subárbol izquierdo, se busca el más grande de dicho subárbol
                 if (current.getLeft() != null) {
                     NodeAVL<E> temp = current.getLeft();
                     while (temp.getRight() != null) temp = temp.getRight();
@@ -160,7 +190,6 @@ public class AVLTree<E extends Comparable<E>> {
         while (current != null) {
             int cmp = x.compareTo(current.getData());
             if (cmp == 0) {
-                // Si tiene subárbol derecho, se busca el más pequeño de dicho subárbol
                 if (current.getRight() != null) {
                     NodeAVL<E> temp = current.getRight();
                     while (temp.getLeft() != null) temp = temp.getLeft();
@@ -205,7 +234,6 @@ public class AVLTree<E extends Comparable<E>> {
                 node = (node.getLeft() != null) ? node.getLeft() : node.getRight();
                 height = true;
             } else {
-                // Buscar sucesor
                 NodeAVL<E> suc = getMin(node.getRight());
                 node.setData(suc.getData());
                 node.setRight(removeAVL(node.getRight(), suc.getData()));
@@ -224,42 +252,47 @@ public class AVLTree<E extends Comparable<E>> {
 
     private NodeAVL<E> rebalanceLeft(NodeAVL<E> node) {
         int fe = node.getFe();
-        if (fe == 1) node.setFe(0);
-        else if (fe == 0) {
+        if (fe == 1) {
+            node.setFe(0);
+        } else if (fe == 0) {
             node.setFe(-1);
             height = false;
         } else if (fe == -1) {
             NodeAVL<E> left = node.getLeft();
-            if (left.getFe() <= 0) {
+            if (left != null && left.getFe() <= 0) {
                 node = rotacionSimpleDerecha(node);
                 if (left.getFe() == 0) {
                     node.setFe(1);
                     node.getRight().setFe(-1);
                     height = false;
                 }
-            } else node = balancearIzquierda(node);
+            } else if (left != null) {
+                node = balancearIzquierda(node);
+            }
         }
         return node;
     }
 
     private NodeAVL<E> rebalanceRight(NodeAVL<E> node) {
         int fe = node.getFe();
-        if (fe == -1) node.setFe(0);
-        else if (fe == 0) {
+        if (fe == -1) {
+            node.setFe(0);
+        } else if (fe == 0) {
             node.setFe(1);
             height = false;
         } else if (fe == 1) {
             NodeAVL<E> right = node.getRight();
-            if (right.getFe() >= 0) {
+            if (right != null && right.getFe() >= 0) {
                 node = rotacionSimpleIzquierda(node);
                 if (right.getFe() == 0) {
                     node.setFe(-1);
                     node.getLeft().setFe(1);
                     height = false;
                 }
-            } else node = balancearDerecha(node);
+            } else if (right != null) {
+                node = balancearDerecha(node);
+            }
         }
-
         return node;
     }
 
