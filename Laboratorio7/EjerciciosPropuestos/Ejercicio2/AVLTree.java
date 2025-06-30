@@ -22,7 +22,10 @@ public class AVLTree<E extends Comparable<E>> {
     }
 
     private NodeAVL<E> insertAVL(NodeAVL<E> node, E x) throws ExceptionItemDuplicate{
-        if(isEmpty()) return new NodeAVL<>(x);
+        if(node == null){
+            height = true;
+            return new NodeAVL<>(x);
+        }
         int cmp = x.compareTo(node.getData());
         if(cmp == 0) {
             height = false;
