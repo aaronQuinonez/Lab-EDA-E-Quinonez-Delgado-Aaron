@@ -124,6 +124,53 @@ public class AVLTree<E extends Comparable<E>> {
         return current.getData();
     }
 
+    public E predecesor(E x) throws ExceptionItemNotFound {
+        NodeAVL<E> current = root;
+        NodeAVL<E> pre = null;
+        while (current != null) {
+            int cmp = x.compareTo(current.getData());
+            if (cmp == 0) {
+                // Si tiene subárbol izquierdo, se busca el más grande de dicho subárbol
+                if (current.getLeft() != null) {
+                    NodeAVL<E> temp = current.getLeft();
+                    while (temp.getRight() != null) temp = temp.getRight();
+                    return temp.getData();
+                }
+                break;
+            }
+            else if (cmp < 0) current = current.getLeft();
+            else {
+                pre = current;
+                current = current.getRight();
+            }
+        }
+        if (pre == null) throw new ExceptionItemNotFound("No hay predecesor");
+        return pre.getData();
+    }
+
+    public E sucesor(E x) throws ExceptionItemNotFound {
+        NodeAVL<E> current = root;
+        NodeAVL<E> suc = null;
+        while (current != null) {
+            int cmp = x.compareTo(current.getData());
+            if (cmp == 0) {
+                // Si tiene subárbol derecho, se busca el más pequeño de dicho subárbol
+                if (current.getRight() != null) {
+                    NodeAVL<E> temp = current.getRight();
+                    while (temp.getLeft() != null) temp = temp.getLeft();
+                    return temp.getData();
+                }
+                break;
+            }
+            else if (cmp < 0) {
+                suc = current;
+                current = current.getLeft();
+            } else current = current.getRight();
+        }
+        if (suc == null) throw new ExceptionItemNotFound("No hay sucesor");
+        return suc.getData();
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
