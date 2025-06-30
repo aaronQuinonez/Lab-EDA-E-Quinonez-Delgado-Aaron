@@ -2,34 +2,41 @@ package Laboratorio7.EjerciciosPropuestos.Ejercicio2;
 
 public class Main {
     public static void main(String[] args) {
-        AVLTree<Integer> avl = new AVLTree<>();
-
         try {
-            avl.insert(30);
-            avl.insert(20);
-            avl.insert(40);
-            avl.insert(10);
-            avl.insert(50);
-            avl.insert(25);
-            avl.insert(45);
-            System.out.println("Recorrido del árbol AVL:");
-            System.out.println(avl.toString());
-
-            System.out.println("\nMétodo search():");
-            System.out.println("¿25? " + avl.search(25));
-            System.out.println("¿40? " + avl.search(40));
-            System.out.println("¿99? " + avl.search(99));
-            System.out.println("¿5?  " + avl.search(5));
-        } catch (ExceptionItemDuplicate e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-
-        try {
-            System.out.println("\nMínimo del árbol: " + avl.min());
-            System.out.println("Máximo del árbol: " + avl.max());
-            System.out.println("Predecesor de 25: " + avl.predecesor(25));
-            System.out.println("Sucesor de 25: " + avl.sucesor(25));
-        } catch (ExceptionItemNotFound e) {
+            AVLTree<Integer> tree = new AVLTree<>();
+            // Insertar elementos
+            tree.insert(30);
+            tree.insert(20);
+            tree.insert(40);
+            tree.insert(10);
+            tree.insert(25);
+            tree.insert(35);
+            tree.insert(50);
+            tree.insert(5);
+            tree.insert(15);
+            System.out.println("Árbol AVL después de insertar:");
+            System.out.println(tree);
+            // Buscar elementos
+            System.out.println("\n¿Contiene 25? " + tree.search(25));
+            System.out.println("¿Contiene 100? " + tree.search(100));
+            // Mínimo y máximo
+            System.out.println("\nMínimo: " + tree.min());
+            System.out.println("Máximo: " + tree.max());
+            // Predecesor y Sucesor
+            System.out.println("\nPredecesor de 25: " + tree.predecesor(25));
+            System.out.println("Sucesor de 25: " + tree.sucesor(25));
+            // Eliminar nodo
+            tree.remove(30);  // nodo con dos hijos
+            System.out.println("\nÁrbol AVL después de eliminar 30:");
+            System.out.println(tree);
+            // Eliminar hoja
+            tree.remove(5);
+            System.out.println("\nÁrbol AVL después de eliminar 5:");
+            System.out.println(tree);
+            // Destruir el árbol
+            tree.destroy();
+            System.out.println("\n¿Árbol vacío? " + tree.isEmpty());
+        } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
