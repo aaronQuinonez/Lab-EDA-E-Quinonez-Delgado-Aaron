@@ -5,21 +5,21 @@ public class Main {
         AVLTree<Integer> avl = new AVLTree<>();
 
         try {
-            // Caso: sin necesidad de rotación
             avl.insert(30);
             avl.insert(20);
             avl.insert(40);
-            // Caso: rotación simple a la derecha
             avl.insert(10);
-            // Caso: rotación simple a la izquierda
             avl.insert(50);
-            // Caso: rotación doble izquierda-derecha (LR)
             avl.insert(25);
-            // Caso: rotación doble derecha-izquierda (RL)
             avl.insert(45);
             System.out.println("Recorrido del árbol AVL:");
             System.out.println(avl.toString());
 
+            System.out.println("\nMétodo search():");
+            System.out.println("¿25? " + avl.search(25));
+            System.out.println("¿40? " + avl.search(40));
+            System.out.println("¿99? " + avl.search(99));
+            System.out.println("¿5?  " + avl.search(5));
         } catch (ExceptionItemDuplicate e) {
             System.out.println("Error: " + e.getMessage());
         }
