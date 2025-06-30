@@ -23,5 +23,12 @@ public class Main {
         } catch (ExceptionItemDuplicate e) {
             System.out.println("Error: " + e.getMessage());
         }
+
+        try {
+            System.out.println("\nMínimo del árbol: " + avl.min());
+            System.out.println("Máximo del árbol: " + avl.max());
+        } catch (ExceptionItemNotFound e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 }
