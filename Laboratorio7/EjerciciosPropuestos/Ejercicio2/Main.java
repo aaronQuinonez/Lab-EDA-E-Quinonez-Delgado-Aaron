@@ -1,43 +1,118 @@
 package Laboratorio7.EjerciciosPropuestos.Ejercicio2;
 
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
-        try {
-            AVLTree<Integer> tree = new AVLTree<>();
-            // Insertar elementos
-            tree.insert(30);
-            tree.insert(20);
-            tree.insert(40);
-            tree.insert(10);
-            tree.insert(25);
-            tree.insert(35);
-            tree.insert(50);
-            tree.insert(5);
-            tree.insert(15);
-            System.out.println("Árbol AVL después de insertar:");
-            System.out.println(tree);
-            // Buscar elementos
-            System.out.println("\n¿Contiene 25? " + tree.search(25));
-            System.out.println("¿Contiene 100? " + tree.search(100));
-            // Mínimo y máximo
-            System.out.println("\nMínimo: " + tree.min());
-            System.out.println("Máximo: " + tree.max());
-            // Predecesor y Sucesor
-            System.out.println("\nPredecesor de 25: " + tree.predecesor(25));
-            System.out.println("Sucesor de 25: " + tree.sucesor(25));
-            // Eliminar nodo
-            tree.remove(30);  // nodo con dos hijos
-            System.out.println("\nÁrbol AVL después de eliminar 30:");
-            System.out.println(tree);
-            // Eliminar hoja
-            tree.remove(5);
-            System.out.println("\nÁrbol AVL después de eliminar 5:");
-            System.out.println(tree);
-            // Destruir el árbol
-            tree.destroy();
-            System.out.println("\n¿Árbol vacío? " + tree.isEmpty());
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-        }
+        Scanner sc = new Scanner(System.in);
+        AVLTree<Integer> tree = new AVLTree<>();
+        int option;
+
+        do {
+            System.out.println("\n--- MENÚ ÁRBOL AVL ---");
+            System.out.println("1. Insertar elemento");
+            System.out.println("2. Eliminar elemento");
+            System.out.println("3. Buscar elemento");
+            System.out.println("4. Mínimo");
+            System.out.println("5. Máximo");
+            System.out.println("6. Predecesor");
+            System.out.println("7. Sucesor");
+            System.out.println("8. Mostrar recorridos");
+            System.out.println("9. Destruir árbol");
+            System.out.println("10. Verificar si está vacío");
+            System.out.println("0. Salir");
+            System.out.print("Elige una opción: ");
+            option = sc.nextInt();
+
+            switch (option) {
+                case 1 -> {
+                    System.out.print("Ingrese el elemento a insertar: ");
+                    int val = sc.nextInt();
+                    try {
+                        tree.insert(val);
+                        System.out.println("Elemento insertado.");
+                    } catch (Exception e) {
+                        System.out.println("Error: " + e.getMessage());
+                    }
+                }
+
+                case 2 -> {
+                    System.out.print("Ingrese el elemento a eliminar: ");
+                    int val = sc.nextInt();
+                    try {
+                        tree.remove(val);
+                        System.out.println("Elemento eliminado.");
+                    } catch (Exception e) {
+                        System.out.println("Error: " + e.getMessage());
+                    }
+                }
+
+                case 3 -> {
+                    System.out.print("Ingrese el elemento a buscar: ");
+                    int val = sc.nextInt();
+                    try {
+                        boolean found = tree.search(val);
+                        System.out.println("¿Encontrado? " + found);
+                    } catch (Exception e) {
+                        System.out.println("Error: " + e.getMessage());
+                    }
+                }
+
+                case 4 -> {
+                    try {
+                        System.out.println("Mínimo: " + tree.min());
+                    } catch (Exception e) {
+                        System.out.println("Error: " + e.getMessage());
+                    }
+                }
+
+                case 5 -> {
+                    try {
+                        System.out.println("Máximo: " + tree.max());
+                    } catch (Exception e) {
+                        System.out.println("Error: " + e.getMessage());
+                    }
+                }
+
+                case 6 -> {
+                    System.out.print("Ingrese el valor para hallar su predecesor: ");
+                    int val = sc.nextInt();
+                    try {
+                        System.out.println("Predecesor: " + tree.predecesor(val));
+                    } catch (Exception e) {
+                        System.out.println("Error: " + e.getMessage());
+                    }
+                }
+
+                case 7 -> {
+                    System.out.print("Ingrese el valor para hallar su sucesor: ");
+                    int val = sc.nextInt();
+                    try {
+                        System.out.println("Sucesor: " + tree.sucesor(val));
+                    } catch (Exception e) {
+                        System.out.println("Error: " + e.getMessage());
+                    }
+                }
+
+                case 8 -> {
+                    System.out.println("--- Recorridos del árbol ---");
+                    System.out.println(tree);
+                }
+
+                case 9 -> {
+                    tree.destroy();
+                    System.out.println("Árbol destruido.");
+                }
+
+                case 10 -> System.out.println(tree.isEmpty() ? "Árbol vacío." : "Árbol NO vacío.");
+
+                case 0 -> System.out.println("Saliendo del programa...");
+
+                default -> System.out.println("Opción inválida.");
+            }
+
+        } while (option != 0);
+
+        sc.close();
     }
 }
