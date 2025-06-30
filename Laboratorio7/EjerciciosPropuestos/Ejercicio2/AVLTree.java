@@ -259,9 +259,17 @@ public class AVLTree<E extends Comparable<E>> {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        inOrder(root, sb);
-        return sb.toString().trim();
+        StringBuilder strIn = new StringBuilder();
+        StringBuilder strPre = new StringBuilder();
+        StringBuilder strPost = new StringBuilder();
+
+        inOrder(root, strIn);
+        preOrder(root, strPre);
+        postOrder(root, strPost);
+
+        return "Recorrido Inorden: " + strIn.toString().trim()
+            + "\nRecorrido Preorden: " + strPre.toString().trim()
+            + "\nRecorrido Postorden: " + strPost.toString().trim();
     }
 
     private void inOrder(NodeAVL<E> node, StringBuilder sb) {
@@ -269,6 +277,22 @@ public class AVLTree<E extends Comparable<E>> {
             inOrder(node.getLeft(), sb);
             sb.append(node.getData()).append(" ");
             inOrder(node.getRight(), sb);
+        }
+    }
+
+    private void preOrder(NodeAVL<E> node, StringBuilder sb) {
+        if (node != null) {
+            sb.append(node.getData()).append(" ");
+            preOrder(node.getLeft(), sb);
+            preOrder(node.getRight(), sb);
+        }
+    }
+
+    private void postOrder(NodeAVL<E> node, StringBuilder sb) {
+        if (node != null) {
+            postOrder(node.getLeft(), sb);
+            postOrder(node.getRight(), sb);
+            sb.append(node.getData()).append(" ");
         }
     }
 }
