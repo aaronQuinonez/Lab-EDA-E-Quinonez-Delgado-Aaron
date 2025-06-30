@@ -98,6 +98,18 @@ public class AVLTree<E extends Comparable<E>> {
         return rotacionSimpleIzquierda(node);
     }
 
+    public boolean search(E data) {
+        NodeAVL<E> current = root;
+        while (current != null) {
+            int cmp = data.compareTo(current.getData());
+            
+            if (cmp == 0) return true;
+            else if (cmp < 0) current = current.getLeft();
+            else current = current.getRight();
+        }
+        return false;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
