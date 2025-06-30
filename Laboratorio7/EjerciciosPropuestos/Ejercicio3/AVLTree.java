@@ -8,6 +8,10 @@ public class AVLTree<E extends Comparable<E>> {
         root = null;
     }
 
+    public NodeAVL<E> getRoot() {
+        return root;
+    }
+
     public boolean isEmpty(){
         return root == null;
     }
