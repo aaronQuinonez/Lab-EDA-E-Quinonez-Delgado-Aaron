@@ -1,0 +1,35 @@
+package Laboratorio8;
+
+public class BTreeTest {
+    public static void main(String[] args) {
+        BTree<Integer> btree = new BTree<>(5);
+        
+        System.out.println("=== PRUEBAS DEL ÁRBOL B ===\n");
+        
+        // Probar si está vacío
+        System.out.println("¿El árbol está vacío? " + btree.isEmpty());
+        System.out.println("Árbol inicial: " + btree.toString() + "\n");
+        
+        // Insertar elementos
+        System.out.println("Insertando elementos: 10, 20, 5, 6, 12, 30, 7, 17");
+        btree.insert(100);
+        btree.insert(200);
+        btree.insert(300);
+        btree.insert(400);
+        btree.insert(500);
+        btree.insert(50);
+        btree.insert(25);
+        btree.insert(350);
+        btree.insert(375);
+        btree.insert(360);
+        btree.insert(355);
+        btree.insert(150);
+        btree.insert(175);
+        btree.insert(120);
+        btree.insert(190);
+        
+        System.out.println("\nÁrbol después de las inserciones:");
+        System.out.println(btree.toString());
+        
+    }
+}
