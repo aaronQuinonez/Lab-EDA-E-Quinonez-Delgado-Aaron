@@ -29,5 +29,8 @@ public class BTreeTest {
         System.out.println("Máximo: " + btree.max());
         System.out.println("Predecesor de 300: " + btree.predecesor(300));
         System.out.println("Sucesor de 300: " + btree.sucesor(300));
+
+        btree.destroy();
+        System.out.println(btree.toString());
     }
 }

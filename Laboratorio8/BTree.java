@@ -13,6 +13,10 @@ public class BTree<E extends Comparable<E>> {
         this.root = null;
     }
 
+    public void destroy() {
+        this.root = null;
+    }
+
     public boolean isEmpty() {
         return this.root == null;
     }
