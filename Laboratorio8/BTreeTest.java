@@ -3,15 +3,7 @@ package Laboratorio8;
 public class BTreeTest {
     public static void main(String[] args) {
         BTree<Integer> btree = new BTree<>(5);
-        
-        System.out.println("=== PRUEBAS DEL ÁRBOL B ===\n");
-        
-        // Probar si está vacío
-        System.out.println("¿El árbol está vacío? " + btree.isEmpty());
-        System.out.println("Árbol inicial: " + btree.toString() + "\n");
-        
-        // Insertar elementos
-        System.out.println("Insertando elementos: 10, 20, 5, 6, 12, 30, 7, 17");
+
         btree.insert(100);
         btree.insert(200);
         btree.insert(300);
@@ -27,9 +19,6 @@ public class BTreeTest {
         btree.insert(175);
         btree.insert(120);
         btree.insert(190);
-        
-        System.out.println("\nÁrbol después de las inserciones:");
         System.out.println(btree.toString());
-        
     }
 }
