@@ -136,20 +136,6 @@ public class BTree<E extends Comparable<E>> {
         return median;
     }
 
-
-    public String toString() {
-        String s = "";
-        if (isEmpty())
-            s += "BTree is empty...";
-        else
-            s = writeTree(this.root);
-        return s;
-    }
-
-    private String writeTree(BNode<E> current) {
-        return writeTree(current, 0);
-    }
-
     public boolean search(E x) {
         return search(this.root, x);
     }
@@ -252,6 +238,18 @@ public class BTree<E extends Comparable<E>> {
         return sucesor(node.childs.get(i), x, candidate);
     }
 
+    public String toString() {
+        String s = "";
+        if (isEmpty())
+            s += "BTree is empty...";
+        else
+            s = writeTree(this.root);
+        return s;
+    }
+
+    private String writeTree(BNode<E> current) {
+        return writeTree(current, 0);
+    }
 
     private String writeTree(BNode<E> current, int level) {
         StringBuilder sb = new StringBuilder();
