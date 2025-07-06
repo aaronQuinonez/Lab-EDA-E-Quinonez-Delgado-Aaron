@@ -146,9 +146,33 @@ public class BTree<E extends Comparable<E>> {
         return s;
     }
 
-   private String writeTree(BNode<E> current) {
-    return writeTree(current, 0);
-}
+    private String writeTree(BNode<E> current) {
+        return writeTree(current, 0);
+    }
+
+    public boolean search(E x) {
+        return search(this.root, x);
+    }
+
+    private boolean search(BNode<E> current, E x) {
+        if (current == null) {
+            return false;
+        }
+        int i = 0;
+        while (i < current.count && x.compareTo(current.keys.get(i)) > 0) {
+            i++;
+        }
+        // Si encontramos la clave
+        if (i < current.count && x.compareTo(current.keys.get(i)) == 0) {
+            return true;
+        }
+        // Si llegamos a un nodo hoja sin encontrarla
+        if (current.childs.get(i) == null) {
+            return false;
+        }
+        // Buscar recursivamente en el hijo adecuado
+        return search(current.childs.get(i), x);
+    }
 
     private String writeTree(BNode<E> current, int level) {
         StringBuilder sb = new StringBuilder();
