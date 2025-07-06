@@ -20,5 +20,10 @@ public class BTreeTest {
         btree.insert(120);
         btree.insert(190);
         System.out.println(btree.toString());
+        if (btree.search(200)) {
+            System.out.println("Clave 200 encontrada.");
+        } else {
+            System.out.println("Clave 200 no está en el árbol.");
+        }
     }
 }
