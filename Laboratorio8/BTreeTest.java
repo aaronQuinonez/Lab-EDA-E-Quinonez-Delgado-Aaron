@@ -25,5 +25,7 @@ public class BTreeTest {
         } else {
             System.out.println("Clave 200 no está en el árbol.");
         }
+        System.out.println("Mínimo: " + btree.min());
+        System.out.println("Máximo: " + btree.max());
     }
 }
