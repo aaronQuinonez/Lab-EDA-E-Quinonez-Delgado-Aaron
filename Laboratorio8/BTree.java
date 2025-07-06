@@ -36,6 +36,250 @@ public class BTree<E extends Comparable<E>> {
         }
     }
 
+    public void remove(E x) {
+        if (isEmpty()) return;
+        remove(this.root, x);
+        // Si la raíz quedó vacía pero tiene un hijo, bajamos un nivel
+        if (root != null && root.count == 0 && root.childs.get(0) != null) {
+            root = root.childs.get(0);
+        }
+    }
+
+    private void remove(BNode<E> node, E x) {
+        if (node == null) return;
+
+        int i = 0;
+        while (i < node.count && x.compareTo(node.keys.get(i)) > 0) {
+            i++;
+        }
+
+        if (i < node.count && x.compareTo(node.keys.get(i)) == 0) {
+            if (node.childs.get(i) == null) { // Es nodo hoja
+                // Eliminar la clave desplazando las demás
+                for (int j = i; j < node.count - 1; j++) {
+                    node.keys.set(j, node.keys.get(j + 1));
+                }
+                node.keys.set(node.count - 1, null);
+                node.count--;
+            } else { // Es nodo interno
+                // Encontrar predecesor inmediato
+                BNode<E> predNode = node.childs.get(i);
+                while (predNode.childs.get(predNode.count) != null) {
+                    predNode = predNode.childs.get(predNode.count);
+                }
+                E pred = predNode.keys.get(predNode.count - 1);
+                node.keys.set(i, pred);
+                remove(node.childs.get(i), pred);
+                
+                // Verificar underflow después de eliminar
+                if (node.childs.get(i).count < (orden + 1) / 2 - 1) {
+                    fixChildBeforeRemove(node, i);
+                }
+            }
+        } else {
+            if (node.childs.get(i) == null) {
+                System.out.println("Clave no encontrada: " + x);
+                return;
+            }
+
+            // Verificar underflow antes de descender
+            int minKeys = (int) Math.ceil((double) orden / 2) - 1;
+            if (node.childs.get(i).count <= minKeys) {
+                fixChildBeforeRemove(node, i);
+                // Ajustar índice si hubo fusión con hermano izquierdo
+                if (i > 0 && node.childs.get(i - 1) != null && 
+                    node.childs.get(i - 1).count > minKeys) {
+                    i--;
+                }
+            }
+
+            remove(node.childs.get(i), x);
+        }
+    }
+
+    private void fixChildBeforeRemove(BNode<E> parent, int pos) {
+        int minKeys = (int) Math.ceil((double) orden / 2) - 1;
+        BNode<E> child = parent.childs.get(pos);
+
+        // 1. Intentar préstamo del hermano izquierdo
+        if (pos > 0 && parent.childs.get(pos - 1) != null && 
+            parent.childs.get(pos - 1).count > minKeys) {
+            BNode<E> left = parent.childs.get(pos - 1);
+
+            // Desplazar claves e hijos del child a la derecha
+            for (int j = Math.min(child.count, child.keys.size() - 1); j > 0; j--) {
+                child.keys.set(j, child.keys.get(j - 1));
+            }
+            for (int j = Math.min(child.count + 1, child.childs.size() - 1); j > 0; j--) {
+                child.childs.set(j, child.childs.get(j - 1));
+            }
+
+            // Mover clave del padre y del hermano izquierdo
+            if (child.count < child.keys.size()) {
+                child.keys.set(0, parent.keys.get(pos - 1));
+                child.count++;
+            }
+            if (child.count + 1 < child.childs.size()) {
+                child.childs.set(0, left.childs.get(left.count));
+            }
+
+            parent.keys.set(pos - 1, left.keys.get(left.count - 1));
+            
+            // Limpiar en hermano izquierdo
+            left.keys.set(left.count - 1, null);
+            left.childs.set(left.count, null);
+            left.count--;
+            return;
+        }
+
+        // 2. Intentar préstamo del hermano derecho
+        if (pos < parent.count && parent.childs.get(pos + 1) != null && 
+            parent.childs.get(pos + 1).count > minKeys) {
+            BNode<E> right = parent.childs.get(pos + 1);
+
+            // Mover clave del padre al child
+            if (child.count < child.keys.size()) {
+                child.keys.set(child.count, parent.keys.get(pos));
+                child.count++;
+            }
+            if (child.count + 1 < child.childs.size()) {
+                child.childs.set(child.count, right.childs.get(0));
+            }
+
+            parent.keys.set(pos, right.keys.get(0));
+
+            // Ajustar hermano derecho
+            for (int j = 0; j < right.count - 1; j++) {
+                right.keys.set(j, right.keys.get(j + 1));
+                right.childs.set(j, right.childs.get(j + 1));
+            }
+            right.childs.set(right.count - 1, right.childs.get(right.count));
+            right.keys.set(right.count - 1, null);
+            right.childs.set(right.count, null);
+            right.count--;
+            return;
+        }
+
+        // 3. Fusión necesaria
+        if (pos > 0) {
+            fuzeNode(parent, pos - 1);
+        } else if (pos < parent.count) {
+            fuzeNode(parent, pos);
+        }
+    }
+
+    private void fuzeNode(BNode<E> parent, int pos) {
+        // Verificar índices válidos
+        if (pos < 0 || pos >= parent.count) return;
+        
+        BNode<E> left = parent.childs.get(pos);
+        BNode<E> right = parent.childs.get(pos + 1);
+
+        // CORRECCIÓN: La verificación debe ser más permisiva
+        // En la fusión, combinamos: left.count + 1 (clave del padre) + right.count
+        // Esto debe ser <= orden - 1 (máximo de claves por nodo)
+        if (left.count + right.count + 1 > orden - 1) {
+            // Si no podemos fusionar, intentamos redistribuir
+            redistributeKeys(parent, pos);
+            return;
+        }
+
+        // Mover clave del padre al nodo izquierdo
+        if (left.count < left.keys.size()) {
+            left.keys.set(left.count, parent.keys.get(pos));
+            left.count++;
+        }
+
+        // Copiar claves del nodo derecho
+        for (int i = 0; i < right.count && left.count + i < left.keys.size(); i++) {
+            left.keys.set(left.count + i, right.keys.get(i));
+        }
+
+        // Copiar hijos del nodo derecho
+        for (int i = 0; i <= right.count && left.count + i < left.childs.size(); i++) {
+            left.childs.set(left.count + i, right.childs.get(i));
+        }
+
+        left.count += right.count;
+
+        // Eliminar clave del padre y ajustar
+        for (int i = pos; i < parent.count - 1; i++) {
+            parent.keys.set(i, parent.keys.get(i + 1));
+            parent.childs.set(i + 1, parent.childs.get(i + 2));
+        }
+
+        // Limpiar última posición
+        parent.keys.set(parent.count - 1, null);
+        parent.childs.set(parent.count, null);
+        parent.count--;
+
+        // Si el padre es la raíz y queda vacío
+        if (parent == root && parent.count == 0) {
+            root = left;
+        }
+    }
+
+    // Nuevo método para redistribuir claves cuando no se puede fusionar
+    private void redistributeKeys(BNode<E> parent, int pos) {
+        BNode<E> left = parent.childs.get(pos);
+        BNode<E> right = parent.childs.get(pos + 1);
+        
+        // Calcular total de claves disponibles
+        int totalKeys = left.count + right.count + 1; // +1 por la clave del padre
+        int leftNewCount = totalKeys / 2;
+        int rightNewCount = totalKeys - leftNewCount - 1; // -1 por la clave que sube al padre
+        
+        // Crear array temporal con todas las claves ordenadas
+        ArrayList<E> tempKeys = new ArrayList<>();
+        ArrayList<BNode<E>> tempChilds = new ArrayList<>();
+        
+        // Agregar claves del nodo izquierdo
+        for (int i = 0; i < left.count; i++) {
+            tempKeys.add(left.keys.get(i));
+            tempChilds.add(left.childs.get(i));
+        }
+        tempChilds.add(left.childs.get(left.count));
+        
+        // Agregar clave del padre
+        tempKeys.add(parent.keys.get(pos));
+        
+        // Agregar claves del nodo derecho
+        for (int i = 0; i < right.count; i++) {
+            tempKeys.add(right.keys.get(i));
+            tempChilds.add(right.childs.get(i));
+        }
+        tempChilds.add(right.childs.get(right.count));
+        
+        // Limpiar nodos
+        for (int i = 0; i < orden - 1; i++) {
+            left.keys.set(i, null);
+            right.keys.set(i, null);
+        }
+        for (int i = 0; i < orden; i++) {
+            left.childs.set(i, null);
+            right.childs.set(i, null);
+        }
+        
+        // Redistribuir al nodo izquierdo
+        left.count = leftNewCount;
+        for (int i = 0; i < leftNewCount; i++) {
+            left.keys.set(i, tempKeys.get(i));
+            left.childs.set(i, tempChilds.get(i));
+        }
+        left.childs.set(leftNewCount, tempChilds.get(leftNewCount));
+        
+        // La clave que sube al padre
+        parent.keys.set(pos, tempKeys.get(leftNewCount));
+        
+        // Redistribuir al nodo derecho
+        right.count = rightNewCount;
+        for (int i = 0; i < rightNewCount; i++) {
+            right.keys.set(i, tempKeys.get(leftNewCount + 1 + i));
+            right.childs.set(i, tempChilds.get(leftNewCount + 1 + i));
+        }
+        right.childs.set(rightNewCount, tempChilds.get(tempKeys.size()));
+    }
+
     private E push(BNode<E> current, E cl) {
         int pos[] = new int[1];
         E mediana;
