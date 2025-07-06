@@ -198,6 +198,61 @@ public class BTree<E extends Comparable<E>> {
         return node.keys.get(node.count - 1); // Última clave es la mayor
     }
 
+
+    public E predecesor(E x) {
+    return predecesor(this.root, x, null);
+}
+
+    private E predecesor(BNode<E> node, E x, E candidate) {
+        if (node == null) return candidate;
+
+        int i = 0;
+        while (i < node.count && x.compareTo(node.keys.get(i)) > 0) {
+            candidate = node.keys.get(i); // posible predecesor
+            i++;
+        }
+
+        // Si lo encuentra, busca el máximo en su subárbol izquierdo
+        if (i < node.count && x.compareTo(node.keys.get(i)) == 0) {
+            if (node.childs.get(i) != null) {
+                return max(node.childs.get(i));
+            } else {
+                return candidate;
+            }
+        }
+
+        return predecesor(node.childs.get(i), x, candidate);
+    }
+
+    public E sucesor(E x) {
+        return sucesor(this.root, x, null);
+    }
+
+    private E sucesor(BNode<E> node, E x, E candidate) {
+        if (node == null) return candidate;
+
+        int i = 0;
+        while (i < node.count && x.compareTo(node.keys.get(i)) > 0) {
+            i++;
+        }
+
+        // Si lo encuentra, busca el mínimo en su subárbol derecho
+        if (i < node.count && x.compareTo(node.keys.get(i)) == 0) {
+            if (node.childs.get(i + 1) != null) {
+                return min(node.childs.get(i + 1));
+            } else {
+                return candidate;
+            }
+        }
+
+        if (i < node.count) {
+            candidate = node.keys.get(i); // posible sucesor
+        }
+
+        return sucesor(node.childs.get(i), x, candidate);
+    }
+
+
     private String writeTree(BNode<E> current, int level) {
         StringBuilder sb = new StringBuilder();
         if (current != null) {

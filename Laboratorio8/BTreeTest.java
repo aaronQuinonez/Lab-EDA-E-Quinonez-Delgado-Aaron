@@ -27,5 +27,7 @@ public class BTreeTest {
         }
         System.out.println("Mínimo: " + btree.min());
         System.out.println("Máximo: " + btree.max());
+        System.out.println("Predecesor de 300: " + btree.predecesor(300));
+        System.out.println("Sucesor de 300: " + btree.sucesor(300));
     }
 }
