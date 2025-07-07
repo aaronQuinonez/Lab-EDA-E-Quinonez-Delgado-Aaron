@@ -22,7 +22,7 @@ public class BPlusTreeTest {
             System.out.println("2. Eliminar clave");
             System.out.println("3. Buscar clave");
             System.out.println("4. Mostrar árbol (texto)");
-            System.out.println("5. Mostrar writeTree()");
+            System.out.println("5. Mostrar writeTree() + Visualizar");
             System.out.println("6. Valor mínimo");
             System.out.println("7. Valor máximo");
             System.out.println("8. Predecesor");
@@ -62,6 +62,9 @@ public class BPlusTreeTest {
                 case 5:
                     System.out.println("Detalles del árbol (writeTree):");
                     System.out.println(tree.writeTree());
+                    System.out.println("Visualizando gráficamente el árbol...");
+                    BPlusTreeVisualizador<Integer> visualizador = new BPlusTreeVisualizador<>(tree);
+                    visualizador.visualizar();
                     break;
 
                 case 6:
