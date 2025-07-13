@@ -1,4 +1,4 @@
-package Laboratorio9;
+package Laboratorio9.HashClosed;
 
 public class HashClosed<E> {
     private Element<E>[] table;

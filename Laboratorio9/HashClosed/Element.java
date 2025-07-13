@@ -1,4 +1,4 @@
-package Laboratorio9;
+package Laboratorio9.HashClosed;
 
 public class Element<T> {
     private Register<T> register;

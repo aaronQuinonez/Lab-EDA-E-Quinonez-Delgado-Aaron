@@ -1,4 +1,4 @@
-package Laboratorio9;
+package Laboratorio9.HashClosed;
 
 public class TestHashClosed {
     public static void main(String[] args) {

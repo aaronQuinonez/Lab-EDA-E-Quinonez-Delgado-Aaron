@@ -1,4 +1,4 @@
-package Laboratorio9;
+package Laboratorio9.HashClosed;
 
 public class Register<E> implements Comparable<Register<E>> {
     private int key;
