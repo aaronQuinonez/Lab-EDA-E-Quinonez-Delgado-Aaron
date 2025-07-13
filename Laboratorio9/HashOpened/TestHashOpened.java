@@ -2,38 +2,35 @@ package Laboratorio9.HashOpened;
 
 public class TestHashOpened {
     public static void main(String[] args) {
-        HashOpened<Integer> hashTable = new HashOpened<>(10);
+        // TAMAÑO DE LA TABLA: 8
+        HashOpened<String> hashTable = new HashOpened<>(8);
 
-        // Insertar elementos
-        hashTable.insert(new Register<>(100, 100));
-        hashTable.insert(new Register<>(5, 5));
-        hashTable.insert(new Register<>(14, 14));
-        hashTable.insert(new Register<>(15, 15));
-        hashTable.insert(new Register<>(22, 22));
-        hashTable.insert(new Register<>(16, 16));
-        hashTable.insert(new Register<>(17, 17));
-        hashTable.insert(new Register<>(32, 32));
-        hashTable.insert(new Register<>(13, 13));
-        hashTable.insert(new Register<>(32, 32));
-        hashTable.insert(new Register<>(100, 100));
+        // AGREGACIÓN DE ELEMENTOS
+        hashTable.insert(new Register<>(5, "Pepe"));
+        hashTable.insert(new Register<>(21, "Jesús"));
+        hashTable.insert(new Register<>(19, "Juan"));
+        hashTable.insert(new Register<>(16, "María"));
 
-        // Mostrar tabla
+        // INTENTAR AGREGAR CLAVE DUPLICADA
+        hashTable.insert(new Register<>(21, "DUPLICADO"));
+
+        // MOSTRAR LA TABLA HASH
         hashTable.showTable();
 
-        // Buscar claves
-        System.out.println("\nBuscando elementos...");
-        Register<Integer> found32 = hashTable.search(32);
-        System.out.println(found32 != null ? "Encontrado: " + found32 : "Elemento 32 no encontrado.");
+        // BÚSQUEDA DE CLAVES
+        System.out.println("\n--- BÚSQUEDA ---");
+        Register<String> r5 = hashTable.search(5);
+        System.out.println(r5 != null ? "Encontrado: " + r5 : "Clave 5 no encontrada.");
 
-        Register<Integer> found200 = hashTable.search(200);
-        System.out.println(found200 != null ? "Encontrado: " + found200 : "Elemento 200 no encontrado.");
+        Register<String> r21 = hashTable.search(21);
+        System.out.println(r21 != null ? "Encontrado: " + r21 : "Clave 21 no encontrada.");
 
-        // Eliminar claves
-        System.out.println("\nEliminando claves 17 y 100...");
-        hashTable.delete(17);
-        hashTable.delete(100);
+        // ELIMINACIÓN LÓGICA
+        System.out.println("\n--- ELIMINACIÓN ---");
+        hashTable.delete(21);
+        hashTable.delete(100); // no existe
 
-        // Mostrar tabla después de eliminar
+        // MOSTRAR TABLA TRAS ELIMINACIÓN
         hashTable.showTable();
     }
 }
