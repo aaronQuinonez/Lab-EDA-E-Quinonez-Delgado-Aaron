@@ -1,49 +1,62 @@
 package Laboratorio9.HashClosed;
 
+import java.util.Scanner;
+
 public class TestHashClosed {
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
         HashClosed<Integer> hashTable = new HashClosed<>(10);
 
-        // Agregar los elementos
-        hashTable.add(new Register<>(100, 100));
-        hashTable.add(new Register<>(5, 5));
-        hashTable.add(new Register<>(14, 14));
-        hashTable.add(new Register<>(15, 15));
-        hashTable.add(new Register<>(22, 22));
-        hashTable.add(new Register<>(16, 16));
-        hashTable.add(new Register<>(17, 17));
-        hashTable.add(new Register<>(32, 32));
-        hashTable.add(new Register<>(13, 13));
-        hashTable.add(new Register<>(32, 32));
-        hashTable.add(new Register<>(100, 100));
+        int opcion;
+        do {
+            System.out.println("\n--- MENÚ: HASH CERRADO ---");
+            System.out.println("1. Insertar elemento");
+            System.out.println("2. Eliminar elemento");
+            System.out.println("3. Buscar elemento");
+            System.out.println("4. Mostrar tabla hash");
+            System.out.println("5. Salir");
+            System.out.print("Seleccione una opción: ");
+            opcion = scanner.nextInt();
 
-        // Mostrar la tabla hash resultante
-        System.out.println("\nTabla hash después de agregar los elementos:");
-        hashTable.display();
+            switch (opcion) {
+                case 1:
+                    System.out.print("Ingrese la clave: ");
+                    int claveInsertar = scanner.nextInt();
+                    System.out.print("Ingrese el valor: ");
+                    int valor = scanner.nextInt();
+                    hashTable.add(new Register<>(claveInsertar, valor));
+                    break;
 
-        // Buscar los elementos
-        System.out.println("\nBuscando elementos...");
-        Register<Integer> found32 = hashTable.find(32);
-        if (found32 != null) {
-            System.out.println("Encontrado el valor 32: " + found32);
-        } else {
-            System.out.println("Elemento 32 no encontrado.");
-        }
+                case 2:
+                    System.out.print("Ingrese la clave a eliminar: ");
+                    int claveEliminar = scanner.nextInt();
+                    hashTable.remove(claveEliminar);
+                    break;
 
-        Register<Integer> found200 = hashTable.find(200);
-        if (found200 != null) {
-            System.out.println("Encontrado el valor 200: " + found200);
-        } else {
-            System.out.println("Elemento 200 no encontrado.");
-        }
+                case 3:
+                    System.out.print("Ingrese la clave a buscar: ");
+                    int claveBuscar = scanner.nextInt();
+                    Register<Integer> encontrado = hashTable.find(claveBuscar);
+                    if (encontrado != null) {
+                        System.out.println("Elemento encontrado: " + encontrado);
+                    } else {
+                        System.out.println("Elemento no encontrado.");
+                    }
+                    break;
 
-        // Eliminar los elementos 17 y 100
-        System.out.println("\nEliminando los elementos 17 y 100...");
-        hashTable.remove(17);
-        hashTable.remove(100);
+                case 4:
+                    hashTable.display();
+                    break;
 
-        // Mostrar la tabla hash resultante después de las eliminaciones
-        System.out.println("\nTabla hash después de eliminar los elementos 17 y 100:");
-        hashTable.display();
+                case 5:
+                    System.out.println("Saliendo del programa...");
+                    break;
+
+                default:
+                    System.out.println("Opción inválida. Intente nuevamente.");
+            }
+
+        } while (opcion != 5);
+        scanner.close();
     }
 }
